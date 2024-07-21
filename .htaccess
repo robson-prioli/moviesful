@@ -1,0 +1,15 @@
+ RewriteEngine On
+
+    # Redireciona todas as requisições para index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(v\d+)/([^/]+)/?$ index.php?version=$1&endpoint=$2 [L,QSA]
+
+    # Redireciona requisições para v1, v2 e v3
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(v\d+)/?$ index.php?version=$1 [L,QSA]
+    
+    # Passa o cabeçalho Authorization para o PHP
+    RewriteCond %{HTTP:Authorization} ^(.+)
+    RewriteRule ^ - [E=HTTP_AUTHORIZATION:%1]
