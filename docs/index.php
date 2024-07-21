@@ -1,3 +1,18 @@
+<?php
+require_once('../_app/Config.ini.php');
+
+$payload = [
+    'iat' => time(), // Timestamp de quando o token foi emitido
+    'exp' => time() + 3600, // Timestamp de expiração (1 hora no futuro)
+    'sub' => 12345, // ID do usuário
+    'name' => 'John Doe', // Nome do usuário
+    'role' => 'admin' // Papel ou função do usuário
+];
+
+$jwt = new JWT();
+$jwt->encode($payload);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +81,7 @@
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 Your Company</p>
+        <p>&copy; 2024</p>
     </footer>
     <script src="script.js"></script>
 </body>

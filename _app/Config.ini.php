@@ -1,12 +1,19 @@
 <?php
-//
-define('BEARER_TOKEN', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjE1OTgwMDgsImV4cCI6MTcyMTYwMTYwOH0=.P1CPgPYAwvwBmHbL65onksr6F8-XhoywVioIo8hQMEE=');
+##############################################################
+############################# API ############################
+##############################################################
+// settings api
+define('JWT_TOKEN', 123);
+define('BEARER_TOKEN', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjE2MDEwMTAsImV4cCI6MTcyMTYwNDYxMCwic3ViIjoxMjM0NSwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImFkbWluIn0.0_D1zmF1L_N00xkyMWwONMTx28NPJt7042svJUM1aQA');
 
+define('API_SORT_DEFAULT', 'asc');
+define('API_PAGE_DEFAULT', 1);
+define('API_LIMIT_DEFAULT', 10);
 
 ##############################################################
 ########################### MYSQL ############################
 ##############################################################
-// your settings from databases
+// settings from databases
 define('DB_HOST', 'localhost');
 define('DB_DATABASE', 'moviesful');
 define('DB_USERNAME', 'root');

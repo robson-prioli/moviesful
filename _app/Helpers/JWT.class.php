@@ -3,16 +3,13 @@
 class JWT {
     private $secretKey;
 
-    public function __construct($secretKey) {
-        $this->secretKey = $secretKey;
+    function __construct() {
+        $this->secretKey = JWT_TOKEN;
     }
 
-    public function encode($expiration = 3600) {
+    public function encode(array $payload, $expiration = 3600) {
         $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-        $payload = [
-            'iat' => time(),
-            'exp' => time() + $expiration
-        ];
+        $payload['exp'] = time() + $expiration;
 
         $base64UrlHeader = $this->base64UrlEncode($header);
         $base64UrlPayload = $this->base64UrlEncode(json_encode($payload));
@@ -29,14 +26,12 @@ class JWT {
             return false;
         }
 
-
         list($base64UrlHeader, $base64UrlPayload, $base64UrlSignature) = $parts;
 
         $header = json_decode($this->base64UrlDecode($base64UrlHeader), true);
         if ($header['alg'] !== 'HS256') {
             return false;
         }
-
 
         $payload = json_decode($this->base64UrlDecode($base64UrlPayload), true);
         $signature = $this->base64UrlDecode($base64UrlSignature);

@@ -22,14 +22,18 @@ class MovieController
     {
         switch ($version) {
             case 'v1':
-                return $this->getMoviesV1($params);
+                $this->getMoviesV1($params);
+            break;
             case 'v2':
-                return $this->getMoviesV2($params);
+                $this->getMoviesV2($params);
+            break;
             case 'v3':
-                return $this->getMoviesV3($params);
+                $this->getMoviesV3($params);
+            break;
             default:
                 http_response_code(404);
-                return ['error' => 'Version not found'];
+                $this->result = ['error' => 'Version not found'];
+            break;
         }
     }
 
@@ -37,23 +41,23 @@ class MovieController
     {
         if (!$this->validateBearerToken($this->getAuthorizationHeader())) {
             http_response_code(401);
-            return ['error' => 'Unauthorized'];
+            $this->result = ['error' => 'Unauthorized'];
+        } else {
+            $this->fetchMovies($params);
         }
-
-        $this->fetchMovies($params);
     }
 
     private function getMoviesV2($params)
     {
         if (!$this->validateBearerToken($this->getAuthorizationHeader())) {
             http_response_code(401);
-            return ['error' => 'Unauthorized'];
-        }
+            $this->result = ['error' => 'Unauthorized'];
+        } else {
+            $this->fetchMovies($params);
 
-        $this->fetchMovies($params);
-
-        if ($params['output'] === 'xml') {
-            return $this->result = $this->convertToXML();
+            if ($params['output'] === 'xml') {
+                return $this->result = $this->convertToXML();
+            }
         }
     }
 
@@ -61,10 +65,10 @@ class MovieController
     {
         if (!$this->validateJWTToken($this->getAuthorizationHeader())) {
             http_response_code(401);
-            return ['error' => 'Unauthorized'];
+            $this->result = ['error' => 'Unauthorized'];
+        } else {
+            $this->fetchMovies($params);
         }
-
-        $this->fetchMovies($params);
     }
 
     private function fetchMovies($params)
@@ -88,7 +92,7 @@ class MovieController
             }
         } catch (Exception $e) {
             http_response_code(404);
-            return ['error' => 'Internal error'];
+            $this->result = ['error' => 'Internal error'];
         }
     }
 

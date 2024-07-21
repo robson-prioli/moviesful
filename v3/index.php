@@ -6,9 +6,9 @@ $GetData = filter_input_array(INPUT_GET, FILTER_DEFAULT);
 
 $params = [
     'filter' => $GetData['filter'] ?? '',
-    'sort' => $GetData['sort'] ?? 'asc',
-    'page' => (int) ($GetData['page'] ?? 1),
-    'limit' => (int) ($GetData['limit'] ?? 10)
+    'sort' => $GetData['sort'] ?? API_SORT_DEFAULT,
+    'page' => (int) ($GetData['page'] ?? API_PAGE_DEFAULT),
+    'limit' => (int) ($GetData['limit'] ?? API_LIMIT_DEFAULT)
 ];
 
 $controller = new MovieController();
