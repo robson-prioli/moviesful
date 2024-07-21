@@ -4,13 +4,13 @@ class MovieController
 {
     private $db;
     private $jwt;
-    private $bearerToken = BEARER_TOKEN; // Token Bearer from v1 e v2
+    private $bearerToken = BEARER_TOKEN; 
     private $result;
 
     public function __construct()
     {
         $this->db = Conn::getInstance()->getConnection();
-        $this->jwt = new JWT(BEARER_TOKEN);
+        $this->jwt = new JWT();
     }
 
     public function getResult()
@@ -23,17 +23,17 @@ class MovieController
         switch ($version) {
             case 'v1':
                 $this->getMoviesV1($params);
-            break;
+                break;
             case 'v2':
                 $this->getMoviesV2($params);
-            break;
+                break;
             case 'v3':
                 $this->getMoviesV3($params);
-            break;
+                break;
             default:
                 http_response_code(404);
                 $this->result = ['error' => 'Version not found'];
-            break;
+                break;
         }
     }
 
@@ -74,9 +74,9 @@ class MovieController
     private function fetchMovies($params)
     {
         $filter = $params['filter'] ?? '';
-        $sort = $params['sort'] ?? 'asc';
-        $page = (int) ($params['page'] ?? 1);
-        $limit = (int) ($params['limit'] ?? 10);
+        $sort = $params['sort'] ?? API_SORT_DEFAULT;
+        $page = (int) ($params['page'] ?? API_PAGE_DEFAULT);
+        $limit = (int) ($params['limit'] ?? API_LIMIT_DEFAULT);
 
         $offset = ($page - 1) * $limit;
 

@@ -13,7 +13,7 @@ define('API_LIMIT_DEFAULT', 10);
 ##############################################################
 ########################### MYSQL ############################
 ##############################################################
-// settings from databases
+// settings database
 define('DB_HOST', 'localhost');
 define('DB_DATABASE', 'moviesful');
 define('DB_USERNAME', 'root');
@@ -26,13 +26,11 @@ define('DB_USERPASS', '');
 spl_autoload_register(function ($class) {
     $directories = ['Conn', 'Controllers', 'Helpers', 'Models'];
 
-    foreach ($directories as $directory) {
+    foreach ($directories as $directory):
         $classFile = __DIR__ . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $class . '.class.php';
 
-        if (file_exists($classFile)) {
+        if (file_exists($classFile)):
             require_once($classFile);
-        }
-    }
-
-    //die("Não foi possivel incluir a {$class}.class.php");
+        endif;
+    endforeach;
 });
