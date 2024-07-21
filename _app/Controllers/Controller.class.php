@@ -1,6 +1,6 @@
 <?php
 
-class MovieController
+class Controller
 {
     private $db;
     private $jwt;
@@ -56,7 +56,7 @@ class MovieController
             $this->fetchMovies($params);
 
             if ($params['output'] === 'xml') {
-                return $this->result = $this->convertToXML();
+                $this->convertToXML();
             }
         }
     }
@@ -88,7 +88,8 @@ class MovieController
             $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
-                $this->result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $this->result = ((empty($rows)) ? ['error' => "empty movies with: {$filter}"] : $rows);
             }
         } catch (Exception $e) {
             http_response_code(404);
@@ -116,7 +117,8 @@ class MovieController
                 $movieXML->addChild($key, htmlspecialchars($value));
             }
         }
-        return $xml->asXML();
+        
+        $this->result = $xml->asXML();
     }
 
     private function getAuthorizationHeader()

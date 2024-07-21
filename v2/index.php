@@ -5,9 +5,9 @@ require_once('../_app/Config.ini.php');
 $GetData = filter_input_array(INPUT_GET, FILTER_DEFAULT);
 
 // override @output
-$GetData['output'] = $GetData['output'] ?? 'json';
+$GetData['output'] = $GetData['output'] ?? 'xml';
 
-$controller = new MovieController();
+$controller = new Controller();
 $controller->handleRequest('v2', $GetData);
 
 if ($GetData['output'] === 'xml'):

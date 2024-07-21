@@ -5,108 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentação da API</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-
-        header {
-            background: #007BFF;
-            color: #fff;
-            padding: 15px 20px;
-            text-align: center;
-            border-bottom: 3px solid #0056b3;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.8em;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px;
-        }
-
-        .search-bar {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .search-bar input[type="text"] {
-            width: 60%;
-            padding: 12px;
-            font-size: 1em;
-            border: 2px solid #007BFF;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        .search-bar input[type="text"]:focus {
-            border-color: #0056b3;
-        }
-
-        .docs {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .endpoint {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #fafafa;
-        }
-
-        .endpoint h2 {
-            margin: 0;
-            font-size: 1.5em;
-            color: #007BFF;
-            border-bottom: 2px solid #007BFF;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .endpoint p {
-            margin: 10px 0;
-        }
-
-        .endpoint code {
-            background: #e9ecef;
-            border-radius: 5px;
-            padding: 2px 6px;
-            font-size: 0.9em;
-            color: #333;
-        }
-
-        .endpoint pre {
-            background: #2e2e2e;
-            color: #f8f8f2;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
-        footer {
-            background: #007BFF;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            border-top: 3px solid #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
@@ -132,11 +31,11 @@
                     <li><code>filter</code> (opcional) - Filtra os filmes pelo título.</li>
                     <li><code>sort</code> (opcional) - Ordena os filmes (asc/desc).</li>
                     <li><code>page</code> (opcional) - Número da página.</li>
-                    <li><code>pageMax</code> (opcional) - Número máximo de resultados por página.</li>
+                    <li><code>limit</code> (opcional) - Número máximo de resultados por página.</li>
                 </ul>
                 <p><strong>Autorização:</strong> Token Bearer é obrigatório.</p>
                 <p><strong>Exemplo de Requisição:</strong></p>
-                <pre><code>GET /api/v1/movies?filter=Action&sort=desc&page=1&pageMax=10
+                <pre><code>GET /api/v1/movies?filter=Action&sort=desc&page=1&limit=10
 Authorization: Bearer YOUR_BEARER_TOKEN</code></pre>
             </div>
 
@@ -150,12 +49,12 @@ Authorization: Bearer YOUR_BEARER_TOKEN</code></pre>
                     <li><code>filter</code> (opcional) - Filtra os filmes pelo título.</li>
                     <li><code>sort</code> (opcional) - Ordena os filmes (asc/desc).</li>
                     <li><code>page</code> (opcional) - Número da página.</li>
-                    <li><code>pageMax</code> (opcional) - Número máximo de resultados por página.</li>
+                    <li><code>limit</code> (opcional) - Número máximo de resultados por página.</li>
                     <li><code>output</code> (opcional) - Define o formato de saída (json/xml).</li>
                 </ul>
                 <p><strong>Autorização:</strong> Token Bearer é obrigatório.</p>
                 <p><strong>Exemplo de Requisição:</strong></p>
-                <pre><code>GET /api/v2/movies?filter=Action&sort=desc&page=1&pageMax=10&output=xml
+                <pre><code>GET /api/v2/movies?filter=Action&sort=desc&page=1&limit=10&output=xml
 Authorization: Bearer YOUR_BEARER_TOKEN</code></pre>
             </div>
 
@@ -169,33 +68,21 @@ Authorization: Bearer YOUR_BEARER_TOKEN</code></pre>
                     <li><code>filter</code> (opcional) - Filtra os filmes pelo título.</li>
                     <li><code>sort</code> (opcional) - Ordena os filmes (asc/desc).</li>
                     <li><code>page</code> (opcional) - Número da página.</li>
-                    <li><code>pageMax</code> (opcional) - Número máximo de resultados por página.</li>
+                    <li><code>limit</code> (opcional) - Número máximo de resultados por página.</li>
                     <li><code>Authorization</code> (obrigatório) - Token JWT no cabeçalho de autorização.</li>
                 </ul>
                 <p><strong>Exemplo de Requisição:</strong></p>
-                <pre><code>GET /api/v3/movies?filter=Action&sort=desc&page=1&pageMax=10
-Authorization: Bearer YOUR_JWT_TOKEN</code></pre>
+                <pre><code>GET /api/v3/movies?filter=Action&sort=desc&page=1&limit=10
+                            Authorization: Bearer YOUR_JWT_TOKEN</code></pre>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 Sua Empresa. Todos os direitos reservados.</p>
+        <p>&copy; 2024. Todos os direitos reservados.</p>
     </footer>
 
-    <script>
-        document.getElementById('search').addEventListener('input', function () {
-            const query = this.value.toLowerCase();
-            document.querySelectorAll('.endpoint').forEach(function (endpoint) {
-                const title = endpoint.querySelector('h2').textContent.toLowerCase();
-                if (title.includes(query)) {
-                    endpoint.style.display = '';
-                } else {
-                    endpoint.style.display = 'none';
-                }
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
