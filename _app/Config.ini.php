@@ -4,7 +4,7 @@
 ##############################################################
 // settings api
 define('JWT_TOKEN', 123);
-define('BEARER_TOKEN', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjE2MDEwMTAsImV4cCI6MTcyMTYwNDYxMCwic3ViIjoxMjM0NSwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImFkbWluIn0.0_D1zmF1L_N00xkyMWwONMTx28NPJt7042svJUM1aQA');
+define('BEARER_TOKEN', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjE2MDYwMDUsImV4cCI6MTcyMTYwOTYwNSwic3ViIjoxMjM0NSwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImFkbWluIn0.9DMayrFyo2y8RAqfO357vk_9NhKV6BFyRqnNEUW-bMY');
 
 define('API_SORT_DEFAULT', 'asc');
 define('API_PAGE_DEFAULT', 1);
