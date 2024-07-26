@@ -3,7 +3,7 @@
 ############################# API ############################
 ##############################################################
 // settings api
-define('JWT_TOKEN', 123);
+define('JWT_TOKEN', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9');
 define('BEARER_TOKEN', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MjE2MDYwMDUsImV4cCI6MTcyMTYwOTYwNSwic3ViIjoxMjM0NSwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImFkbWluIn0.9DMayrFyo2y8RAqfO357vk_9NhKV6BFyRqnNEUW-bMY');
 
 define('API_SORT_DEFAULT', 'asc');
