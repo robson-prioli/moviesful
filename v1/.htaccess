@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Passa o cabeçalho Authorization para o PHP
+RewriteCond %{HTTP:Authorization} ^(.+)
+RewriteRule ^ - [E=HTTP_AUTHORIZATION:%1]
+
+# Redireciona URLs com três partes (ação e query string)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)(/.*)?$ index.php?endpoint=$1&filters=$2 [L,QSA]
+
+# Redireciona URLs com duas partes (somente ação)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)$ index.php?endpoint=$1 [L,QSA]

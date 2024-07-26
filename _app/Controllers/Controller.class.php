@@ -4,8 +4,13 @@ class Controller
 {
     private $db;
     private $jwt;
-    private $bearerToken = BEARER_TOKEN; 
+    private $bearerToken = BEARER_TOKEN;
     private $result;
+
+    private $users = [
+        ['username' => 'user1', 'password' => 'password1'], // Exemplos de usuários
+        ['username' => 'user2', 'password' => 'password2'],
+    ];
 
     public function __construct()
     {
@@ -20,7 +25,8 @@ class Controller
 
     public function handleRequest($version, $params)
     {
-        switch ($version) {
+       
+        switch ($version):
             case 'v1':
                 $this->getMoviesV1($params);
                 break;
@@ -30,11 +36,14 @@ class Controller
             case 'v3':
                 $this->getMoviesV3($params);
                 break;
+            case 'register':
+                    $this->register($params);
+                break;
             default:
                 http_response_code(404);
                 $this->result = ['error' => 'Version not found'];
                 break;
-        }
+        endswitch;
     }
 
     private function getMoviesV1($params)
@@ -80,21 +89,38 @@ class Controller
 
         $offset = ($page - 1) * $limit;
 
+        $query = "SELECT * FROM movies WHERE title LIKE :filter ORDER BY title $sort LIMIT :limit OFFSET :offset";
+        $queryParams = [
+            ':filter' => "%$filter%",
+            ':limit' => $limit,
+            ':offset' => $offset
+        ];
+
         try {
-            $stmt = $this->db->prepare("SELECT * FROM movies WHERE title LIKE :filter ORDER BY title $sort LIMIT :limit OFFSET :offset");
-
-            $stmt->bindValue(':filter', "%$filter%", PDO::PARAM_STR);
-            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
-            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
-
-            if ($stmt->execute()) {
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $this->result = ((empty($rows)) ? ['error' => "empty movies with: {$filter}"] : $rows);
-            }
+            $read = new Read();
+            $read->fullQuery($query, $queryParams);
+            $this->result = empty($read->getResult()) ? ['error' => "empty movies with: {$filter}"] : $read->getResult();
         } catch (Exception $e) {
             http_response_code(404);
             $this->result = ['error' => 'Internal error'];
         }
+    }
+
+    private function register($params)
+    {
+        $username = $params['username'] ?? '';
+        $password = $params['password'] ?? '';
+
+        foreach ($this->users as $user) {
+            if ($user['username'] === $username && $user['password'] === $password) {
+                $token = $this->jwt->encode(['username' => $username]);
+                $this->result = ['token' => $token];
+                return;
+            }
+        }
+
+        http_response_code(401);
+        $this->result = ['error' => 'Invalid credentials'];
     }
 
     private function validateBearerToken($authHeader)
@@ -117,7 +143,7 @@ class Controller
                 $movieXML->addChild($key, htmlspecialchars($value));
             }
         }
-        
+
         $this->result = $xml->asXML();
     }
 

@@ -26,11 +26,12 @@ define('DB_USERPASS', '');
 spl_autoload_register(function ($class) {
     $directories = ['Conn', 'Controllers', 'Helpers', 'Models'];
 
-    foreach ($directories as $directory):
+    foreach ($directories as $directory) :
         $classFile = __DIR__ . DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR . $class . '.class.php';
 
-        if (file_exists($classFile)):
+        if (file_exists($classFile)) :
             require_once($classFile);
         endif;
     endforeach;
 });
+
